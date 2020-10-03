@@ -38,15 +38,15 @@ workflows:
   main_wf:
     jobs:
       - checkout_code
-      - pip_empty
+      - pip_empty:
         requires:
         - checkout_code
-      - pip_requirements
+      - pip_requirements:
         requires:
         - pip_empty
-      - pip_pytest
+      - pip_pytest:
         requires:
         - pip_requirements
-      - pytest_run
+      - pytest_run:
         requires:
         - pip_pytest
