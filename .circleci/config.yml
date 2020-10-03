@@ -66,3 +66,8 @@ workflows:
             - pip_empty
             - pip_requirements
             - pip_boto3
+          filters:
+            branch:
+              #ignore
+              only:
+                - master
