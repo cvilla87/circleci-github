@@ -4,28 +4,40 @@ orbs:
   python: circleci/python@1.1.0
 
 jobs:
-  build:
+  checkout_code:
     executor: python/default
     steps:
       - checkout
+  pip_empty:
+    executor: python/default
+    steps:
       - python/install-packages:
-          name: pip 1
+          pkg-manager: pip
+  pip_requirements:
+    executor: python/default
+    steps:
+      - python/install-packages:
           pip-dependency-file: requirements.txt
-          pkg-manager: pip
+          pkg-manager: pip   
+  pip_pytest:
+    executor: python/default
+    steps:
       - python/install-packages:
-          name: pip 2
-          pkg-manager: pip
-      - python/install-packages:
-          name: pip 3
           args: pytest
           pkg-manager: pip
           pypi-cache: false
+  pytest_run:
+    executor: python/default
+    steps:
       - run:
           name: Execute pytest
           command: |
             pytest --version
 
 workflows:
-  main:
     jobs:
-      - build
+      - checkout_code
+      - pip_empty
+      - pip_requirements
+      - pip_pytest
+      - pytest_run
