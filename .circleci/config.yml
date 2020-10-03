@@ -17,8 +17,8 @@ jobs:
     steps:
       - python/install-packages:
           pkg-manager: pip
-      - attach_workspace:
-          at: ~/repo/workspace
+    #  - attach_workspace:
+    #      at: ~/repo/workspace
   pip_requirements:
     executor: python/default
     steps:
