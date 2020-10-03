@@ -40,13 +40,13 @@ jobs:
           args: boto3
           pkg-manager: pip
           pypi-cache: false
-  pytest_run:
+  python_ver:
     executor: python/default
     steps:
       - run:
-          name: Execute pytest
+          name: Execute python
           command: |
-            pytest --version
+            python --version
 
 workflows:
   main_wf:
@@ -61,7 +61,7 @@ workflows:
       - pip_boto3:
           requires:
             - pip_requirements
-      - pytest_run:
+      - python_ver:
           requires:
             - pip_empty
             - pip_requirements
