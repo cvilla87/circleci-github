@@ -1,3 +1,4 @@
 pip==20.2.3
 boto3==1.15.10
 requests
+pytest

@@ -27,11 +27,13 @@ jobs:
       - python/install-packages:
           pip-dependency-file: requirements.txt  # you can specify a different requirements filename
           pkg-manager: pip   
-  pip_pytest:
+  pip_boto3:
     executor: python/default
     steps:
+      - attach_workspace:
+          at: ~/
       - python/install-packages:
-          args: pytest
+          args: boto3
           pkg-manager: pip
           pypi-cache: false
   pytest_run:
@@ -52,11 +54,11 @@ workflows:
       - pip_requirements:
           requires:
             - pip_empty
-      - pip_pytest:
+      - pip_boto3:
           requires:
             - pip_requirements
       - pytest_run:
           requires:
             - pip_empty
             - pip_requirements
-            - pip_pytest
+            - pip_boto3
