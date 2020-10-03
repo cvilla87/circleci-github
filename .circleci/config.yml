@@ -68,6 +68,4 @@ workflows:
             - pip_boto3
           filters:
             branch:
-              #ignore
-              only:
-                - master
+              only: master
