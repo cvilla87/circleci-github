@@ -17,12 +17,13 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/  # where persisted workspace will be mounted
-          #at: ~/repo/workspace
       - python/install-packages:  # install only what is found in requirements.txt
           pkg-manager: pip
   pip_requirements:
     executor: python/default
     steps:
+      - attach_workspace:
+          at: ~/
       - python/install-packages:
           pip-dependency-file: requirements.txt  # you can specify a different requirements filename
           pkg-manager: pip   
@@ -56,4 +57,6 @@ workflows:
             - pip_requirements
       - pytest_run:
           requires:
+            - pip_empty
+            - pip_requirements
             - pip_pytest
