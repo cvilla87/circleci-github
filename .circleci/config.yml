@@ -9,18 +9,21 @@ jobs:
     steps:
       - checkout
       - python/install-packages:
+          name: pip 1
           pip-dependency-file: requirements.txt
           pkg-manager: pip
       - python/install-packages:
+          name: pip 2
           pkg-manager: pip
       - python/install-packages:
+          name: pip 3
           args: pytest
           pkg-manager: pip
           pypi-cache: false
       - run:
+          name: Execute pytest
           command: |
             pytest --version
-          name: Test
 
 workflows:
   main:
