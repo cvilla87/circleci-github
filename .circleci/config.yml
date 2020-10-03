@@ -8,17 +8,17 @@ jobs:
     executor: python/default
     steps:
       - checkout
-    #  - persist_to_workspace:
-    #    root: ~/
-    #    paths:
-    #      - '*'
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - '*'
   pip_empty:
     executor: python/default
     steps:
       - python/install-packages:
           pkg-manager: pip
-    #  - attach_workspace:
-    #      at: ~/repo/workspace
+      - attach_workspace:
+          at: ~/repo/workspace
   pip_requirements:
     executor: python/default
     steps:
