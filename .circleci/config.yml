@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - persist_to_workspace:
-        root: .
+        root: ~/
         paths:
           - '*'
   pip_empty:
