@@ -9,17 +9,17 @@ jobs:
     steps:
       - checkout
       - persist_to_workspace:
-          root: ~/
+          root: ~/  # directory that we want to persist
           paths:
             - '*'
   pip_empty:
     executor: python/default
     steps:
-          #at: ~/repo/workspace
       - python/install-packages:  # install only what is found in requirements.txt
           pkg-manager: pip
       - attach_workspace:
-          at: ~/
+          at: ~/  # where persisted workspace will be mounted
+          #at: ~/repo/workspace
   pip_requirements:
     executor: python/default
     steps:
@@ -48,12 +48,12 @@ workflows:
       - pip_empty:
           requires:
             - checkout_code
-    #  - pip_requirements:
-    #      requires:
-    #        - pip_empty
-    #  - pip_pytest:
-    #      requires:
-    #        - pip_requirements
-    #  - pytest_run:
-    #      requires:
-    #        - pip_pytest
+      - pip_requirements:
+          requires:
+            - pip_empty
+      - pip_pytest:
+          requires:
+            - pip_requirements
+      - pytest_run:
+          requires:
+            - pip_pytest
