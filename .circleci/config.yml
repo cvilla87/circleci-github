@@ -15,11 +15,11 @@ jobs:
   pip_empty:
     executor: python/default
     steps:
-      - attach_workspace:
-          at: ~/
           #at: ~/repo/workspace
       - python/install-packages:  # install only what is found in requirements.txt
           pkg-manager: pip
+      - attach_workspace:
+          at: ~/
   pip_requirements:
     executor: python/default
     steps:
