@@ -19,6 +19,10 @@ jobs:
           at: ~/  # where persisted workspace will be mounted
       - python/install-packages:  # install only what is found in requirements.txt
           pkg-manager: pip
+      - run:
+          name: Execute pytest
+          command: |
+            pytest --version
   pip_requirements:
     executor: python/default
     steps:
