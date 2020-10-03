@@ -40,13 +40,13 @@ workflows:
       - checkout_code
       - pip_empty:
         requires:
-        - checkout_code
+          - checkout_code
       - pip_requirements:
         requires:
-        - pip_empty
+          - pip_empty
       - pip_pytest:
         requires:
-        - pip_requirements
+          - pip_requirements
       - pytest_run:
         requires:
-        - pip_pytest
+          - pip_pytest
