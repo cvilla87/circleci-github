@@ -67,5 +67,6 @@ workflows:
             - pip_requirements
             - pip_boto3
           filters:
-            branch:
-              only: master
+            branches:
+              only: 
+                - master
