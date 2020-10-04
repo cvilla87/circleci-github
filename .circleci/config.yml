@@ -4,19 +4,38 @@ orbs:
   python: circleci/python@1.1.0
 
 jobs:
-  build:
+  checkout_code:
     executor: python/default
     steps:
       - checkout
+      - persist_to_workspace:
+          root: ~/  # directory that we want to persist
+          paths:
+            - '*'
+  pip_empty:
+    executor: python/default
+    steps:
+      - attach_workspace:
+          at: ~/  # where persisted workspace will be mounted
       - python/install-packages:  # install only what is found in requirements.txt
           pkg-manager: pip
       - run:
           name: Execute pytest
           command: |
             pytest --version
+  pip_requirements:
+    executor: python/default
+    steps:
+      - attach_workspace:
+          at: ~/
       - python/install-packages:
           pip-dependency-file: requirements.txt  # you can specify a different requirements filename
           pkg-manager: pip   
+  pip_boto3:
+    executor: python/default
+    steps:
+      - attach_workspace:
+          at: ~/
       - python/install-packages:
           args: boto3
           pkg-manager: pip
@@ -32,7 +51,22 @@ jobs:
 workflows:
   main_wf:
     jobs:
-      - build
+      - checkout_code
+      - pip_empty:
+          requires:
+            - checkout_code
+      - pip_requirements:
+          requires:
+            - pip_empty
+      - pip_boto3:
+          requires:
+            - pip_requirements
       - python_ver:
           requires:
-            - build
+            - pip_empty
+            - pip_requirements
+            - pip_boto3
+          filters:
+            branches:
+              only:
+                - circleci-project-setup
